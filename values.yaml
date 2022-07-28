@@ -1,0 +1,52 @@
+controller:
+  componentName: jenkins-controller
+  serviceType: LoadBalancer
+  image: 'jenkins/jenkins'
+  imagePullPolicy: 'Always'
+  adminSecret: true
+  adminUser: admin
+  adminPassword: 'formetoknowforyoutofindout'
+  resources:
+    requests:
+      cpu: '50m'
+      memory: '256Mi'
+    limits:
+      cpu: '2000m'
+      memory: '4096Mi'
+  # Setup of Jenkins Configuration as Code
+  JCasC:
+    enabled: true
+    configScripts:
+      base-config: |
+        jobs:
+          - script: >
+              multibranchPipelineJob('ELK-pipe') {
+                description('Deploy this little ELK stack through a multibranch pipeline')
+                branchSources {
+                  git {
+                    id('1')
+                    remote('https://github.com/PaulOberm/es-paul.git')
+                    includes('*main')
+                  }
+                  git {
+                    id('2')
+                    remote('https://github.com/PaulOberm/es-paul.git')
+                    includes('*dev')
+                  }
+                }
+              }
+      welcome-message: |
+        jenkins:
+          systemMessage: Welcome to little ELK stack CI\CD server. Jenkins is configured and managed through JCasC.
+  env:
+    - name: CASC_JENKINS_CONFIG
+      value: "/var/jenkins_home/casc_configs/../data/jenkins.yaml"
+  installPlugins:
+    - kubernetes:latest
+    - kubernetes-credentials:latest
+    - workflow-aggregator:latest
+    - workflow-job:latest
+    - credentials-binding:latest
+    - git:latest
+    - configuration-as-code:latest
+    - job-dsl:latest
