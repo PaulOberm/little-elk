@@ -78,11 +78,7 @@ podAnnotations: {}
 # additionals labels
 labels: {}
 
-<<<<<<< Updated upstream
-esJavaOpts: "-Xmx2g -Xms2g"
-=======
-esJavaOpts: "-Xmx1g -Xms1g"
->>>>>>> Stashed changes
+esJavaOpts: "" #"-Xmx2g -Xms2g"
 
 resources:
   requests:
@@ -106,11 +102,7 @@ volumeClaimTemplate:
   accessModes: ["ReadWriteOnce"]
   resources:
     requests:
-<<<<<<< Updated upstream
       storage: 30Gi
-=======
-      storage: 3Gi
->>>>>>> Stashed changes
 
 rbac:
   create: false
@@ -283,7 +275,7 @@ readinessProbe:
           set -- "$@" -u "elastic:${ELASTIC_PASSWORD}"
         fi
       
-        curl --output /dev/null "https://127.0.0.1:9200${path}"
+        curl --output /dev/null "https://localhost:9200${path}"
         # -k "$@"
       }
       
