@@ -25,12 +25,12 @@ controller:
                 branchSources {
                   git {
                     id('1')
-                    remote('https://github.com/PaulOberm/es-paul.git')
+                    remote('https://github.com/PaulOberm/little-elk.git')
                     includes('*main')
                   }
                   git {
                     id('2')
-                    remote('https://github.com/PaulOberm/es-paul.git')
+                    remote('https://github.com/PaulOberm/little-elk.git')
                     includes('*dev')
                   }
                 }
