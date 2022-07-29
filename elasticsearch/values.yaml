@@ -14,6 +14,7 @@ roles:
   ingest: "true"
   data: "true"
 
+xpack.ml.enabled: false
 replicas: 3
 minimumMasterNodes: 2
 
@@ -83,10 +84,10 @@ esJavaOpts: "" #"-Xmx2g -Xms2g"
 resources:
   requests:
     cpu: "1000m"
-    memory: "2Gi"
+    memory: "4Gi"
   limits:
     cpu: "1000m"
-    memory: "2Gi"
+    memory: "4Gi"
 
 initResources: {}
 # limits:
@@ -130,7 +131,7 @@ podSecurityPolicy:
       - emptyDir
 
 persistence:
-  enabled: true
+  enabled: false
   labels:
     # Add default labels for the volumeClaimTemplate of the StatefulSet
     enabled: false
@@ -182,6 +183,7 @@ enableServiceLinks: true
 
 protocol: https
 httpPort: 9200
+http.port: 9200
 transportPort: 9300
 
 service:
@@ -253,6 +255,9 @@ readinessProbe:
           set -- "$@" -u "elastic:${ELASTIC_PASSWORD}"
         fi
       
+        echo $(ls)
+        echo $(ls -la bin)
+        echo $(service elasticsearch start)
         curl --output /dev/null "https://localhost:9200${path}"
         # -k "$@"
       }
@@ -367,9 +372,9 @@ networkPolicy:
   ## In order for a Pod to access Elasticsearch, it needs to have the following label:
   ## {{ template "uname" . }}-client: "true"
   ## Example for default configuration to access HTTP port:
-  ## elasticsearch-master-http-client: "true"
+  elasticsearch-master-http-client: "true"
   ## Example for default configuration to access transport port:
-  ## elasticsearch-master-transport-client: "true"
+  elasticsearch-master-transport-client: "true"
 
   http:
     enabled: true
