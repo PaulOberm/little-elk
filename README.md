@@ -28,7 +28,7 @@ the corresponding GitHub [repo](https://github.com/PaulOberm/little-elk)
 
 Get password to Jenkins admin user through
 - `sudo su -`
-- `microk8s kubectl exec --namespace default -it svc/jenkins -c jenkins -- /bin/cat /run/secrets/additional/chart-admin-password && echo`
+- `microk8s kubectl exec --namespace default -it svc/esjenkins -c jenkins -- /bin/cat /run/secrets/additional/chart-admin-password && echo`
 
 ## Shutdown ##
 - `microk8s.helm3 uninstall esjenkins`
