@@ -155,28 +155,6 @@ extraInitContainers: []
 #   image: busybox
 #   command: ['do', 'something']
 
-initContainerEnv:
-  - name: https_proxy
-    value: "http://172.23.3.93:3128"
-  - name: http_proxy
-    value: "http://172.23.3.93:3128"
-  - name: no_proxy
-    value: "localhost,localaddress,169.254.169.254,127.0.0.1,127.0.1.1,kubregistry.prod.oami.eu,prod.oami.eu,oami.eu,10.0.0.0/8,192.168.0.0/16,127.0.0.1,172.16.0.0/16,192.168.1.107,instance-http"
-  - name: JAVA_OPTS
-    value: "-Dhttps.proxyHost=172.23.3.93 -Dhttps.proxyPort=3128"
-containerEnv:
-  - name: https_proxy
-    value: "http://172.23.3.93:3128"
-  - name: http_proxy
-    value: "http://172.23.3.93:3128"
-  - name: no_proxy
-    value: "localhost,localaddress,169.254.169.254,127.0.0.1,127.0.1.1,kubregistry.prod.oami.eu,prod.oami.eu,oami.eu,10.0.0.0/8,192.168.0.0/16,127.0.0.1,172.16.0.0/16,192.168.1.107,instance-http"
-javaOpts: >-
-  -Dhttp.proxyHost=172.23.3.93
-  -Dhttp.proxyPort=3128
-  -Dhttps.proxyHost=172.23.3.93
-  -Dhttps.proxyPort=3128
-
 # This is the PriorityClass settings as defined in
 # https://kubernetes.io/docs/concepts/configuration/pod-priority-preemption/#priorityclass
 priorityClassName: ""
