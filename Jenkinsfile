@@ -103,7 +103,7 @@ podTemplate(label: 'esjenkinspod',
             }
             echo "${env.NAMESPACE}"
 
-            // sh 'helm upgrade --install elasticsearch elastic/elasticsearch -f elasticsearch/values.yaml -n prod --create-namespace'
+            // sh 'helm upgrade --install elasticsearch elastic/elasticsearch -f elasticsearch/values.yaml -n $env.NAMESPACE --create-namespace'
             sh "helm upgrade --install logstash elastic/logstash -f logstash/values.yaml -n $env.NAMESPACE --create-namespace"
             sh "helm upgrade --install kibana elastic/kibana -f kibana/values.yaml -n $env.NAMESPACE --create-namespace"
             sh "helm upgrade --install metricbeat elastic/metricbeat -f metricbeat/values.yaml -n $env.NAMESPACE --create-namespace"
