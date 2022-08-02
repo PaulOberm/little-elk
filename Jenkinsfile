@@ -82,7 +82,7 @@ podTemplate(label: 'esjenkinspod',
             // sh 'helm test elasticsearch'
             sh "helm test logstash -n $env.NAMESPACE"
             sh "helm test kibana -n $env.NAMESPACE"
-            sh 'helm test metricbeat'
+            sh "helm test metricbeat -n $env.NAMESPACE"
 
             // sh 'helm uninstall elasticsearch -n $NAMESPACE'
             sh "helm uninstall logstash -n $env.NAMESPACE"
@@ -105,8 +105,8 @@ podTemplate(label: 'esjenkinspod',
 
             // sh 'helm upgrade --install elasticsearch elastic/elasticsearch -f elasticsearch/values.yaml -n prod --create-namespace'
             sh "helm upgrade --install logstash elastic/logstash -f logstash/values.yaml -n $env.NAMESPACE --create-namespace"
-            // sh 'helm upgrade --install kibana elastic/kibana -f kibana/values.yaml -n prod --create-namespace'
-            // sh 'helm upgrade --install metricbeat elastic/metricbeat -f metricbeat/values.yaml -n prod --create-namespace'
+            sh "helm upgrade --install kibana elastic/kibana -f kibana/values.yaml -n $env.NAMESPACE --create-namespace"
+            sh "helm upgrade --install metricbeat elastic/metricbeat -f metricbeat/values.yaml -n $env.NAMESPACE --create-namespace"
         }
       }      
     }
