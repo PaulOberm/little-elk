@@ -66,12 +66,12 @@ podTemplate(label: 'esjenkinspod',
 
             // Deploy to namespace according to branch
             if (env.BRANCH_NAME.equals("dev")) {
-                sh "NAMESPACE=dev-test"
+                env.NAMESPACE="dev-test"
                 
             } else {
-                sh "NAMESPACE=prod-test"
+                env.NAMESPACE="prod-test"
             }
-            echo "$NAMESPACE"
+            echo "${env.NAMESPACE}"
 
             // sh 'helm upgrade --install elasticsearch elastic/elasticsearch -f elasticsearch/values.yaml -n $NAMESPACE --create-namespace'
             // sh 'helm upgrade --install logstash elastic/logstash -f logstash/values.yaml -n $NAMESPACE --create-namespace'
@@ -96,12 +96,12 @@ podTemplate(label: 'esjenkinspod',
             sh 'ls'
 
             if (env.BRANCH_NAME.equals("dev")) {
-                sh "NAMESPACE=dev"
+                env.NAMESPACE="dev"
                 
             } else {
-                sh "NAMESPACE=prod"
+                env.NAMESPACE="prod"
             }
-            echo "$NAMESPACE"
+            echo "${env.NAMESPACE}"
 
             // sh 'helm upgrade --install elasticsearch elastic/elasticsearch -f elasticsearch/values.yaml -n prod --create-namespace'
             // sh 'helm upgrade --install logstash elastic/logstash -f logstash/values.yaml -n prod --create-namespace'
