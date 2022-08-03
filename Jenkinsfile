@@ -1,4 +1,6 @@
-podTemplate(label: 'esjenkinspod',
+podTemplate(
+  label: 'esjenkinspod',
+  namespace: 'devops'
   containers: [ 
     containerTemplate(
       name: 'docker', 
@@ -31,15 +33,15 @@ podTemplate(label: 'esjenkinspod',
       command: 'cat'
     )
   ],
-
   volumes: [
     hostPathVolume(mountPath: '/var/run/docker.sock', hostPath: '/var/run/docker.sock'),
     hostPathVolume(mountPath: '/usr/local/bin/helm', hostPath: '/usr/local/bin/helm')
-  ]
-  ) {
+  ])
+  {
     node('esjenkinspod') {
       stage('Checkout') {
         echo 'Checkout repository from GitHub'
+        scm.extensions << [$class: 'CloneOption', shallow: true]
         checkout scm
       }
       stage('Build') {
