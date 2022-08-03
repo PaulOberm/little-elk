@@ -29,7 +29,7 @@ the corresponding GitHub [repo](https://github.com/PaulOberm/little-elk) to **ma
 and **dev** branch. Kubernetes plugin is applied to deploy build agents for
 executing the pipeline.
 
-- `microk8s.helm3 upgrade --install esjenkins jenkins/jenkins -f values.yaml`
+- `microk8s.helm3 upgrade --install esjenkins jenkins/jenkins -f values.yaml --namespace devops --create-namespace`
 
 Get password to Jenkins admin user through
 - `sudo su -`
