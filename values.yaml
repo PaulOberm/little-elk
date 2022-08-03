@@ -1,14 +1,31 @@
 controller:
   componentName: jenkins-controller
-  serviceType: ClusterIP
+  serviceType: NodePort
   image: 'jenkins/jenkins'
   imagePullPolicy: 'Always'
   adminSecret: true
   adminUser: admin
   adminPassword: 'formetoknowforyoutofindout'
-  namespaces:
-    - devops
-    - reverseproxy_default 
+  servicePort: 8080
+  targetPort: 8080
+  jenkinsUriPrefix: "/jenkins"
+  initContainerEnv:
+    - name: https_proxy
+      value: "http://172.18.0.4:443"
+    - name: http_proxy
+      value: "http://172.18.0.4:80"
+    - name: JAVA_OPTS
+      value: "-Dhttps.proxyHost=172.18.0.4 -Dhttps.proxyPort=3128"
+  containerEnv:
+    - name: https_proxy
+      value: "http://172.18.0.4:443"
+    - name: http_proxy
+      value: "http://172.18.0.4:80"
+  javaOpts: >-
+    -Dhttp.proxyHost=172.18.0.4
+    -Dhttp.proxyPort=80
+    -Dhttps.proxyHost=172.18.0.4
+    -Dhttps.proxyPort=443
   resources:
     requests:
       cpu: '50m'
