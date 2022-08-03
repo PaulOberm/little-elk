@@ -45,18 +45,18 @@ controller:
       welcome-message: |
         jenkins:
           systemMessage: Welcome to little ELK stack CI\CD server. Jenkins is configured and managed through JCasC.
-      securityRealm: |-
-        local:
-          allowsSignup: false
-          enableCaptcha: false
-          users:
-          - id: "${chart-admin-username}"
-            name: "Jenkins Admin"
-            password: "${chart-admin-password}"
-      # Ignored if authorizationStrategy is defined in controller.JCasC.configScripts
-      authorizationStrategy: |-
-        loggedInUsersCanDoAnything:
-          allowAnonymousRead: false
+    securityRealm: |-
+      local:
+        allowsSignup: false
+        enableCaptcha: false
+        users:
+        - id: "${chart-admin-username}"
+          name: "admin"
+          password: "${chart-admin-password}"
+    # Ignored if authorizationStrategy is defined in controller.JCasC.configScripts
+    authorizationStrategy: |-
+      loggedInUsersCanDoAnything:
+        allowAnonymousRead: false
   env:
     - name: CASC_JENKINS_CONFIG
       value: "/var/jenkins_home/casc_configs/../data/jenkins.yaml"
