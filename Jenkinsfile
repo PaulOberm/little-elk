@@ -1,6 +1,6 @@
 podTemplate(
   label: 'esjenkinspod',
-  namespace: 'devops'
+  namespace: 'devops',
   containers: [ 
     containerTemplate(
       name: 'docker', 
