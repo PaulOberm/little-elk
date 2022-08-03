@@ -1,7 +1,10 @@
 controller:
   componentName: jenkins-controller
-  serviceType: LoadBalancer
+  kind: Pod
   image: 'jenkins/jenkins'
+  ports: 
+    - containerPort: 8080
+    - hostPort: 8086
   imagePullPolicy: 'Always'
   adminSecret: true
   adminUser: admin
