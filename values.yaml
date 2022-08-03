@@ -1,14 +1,14 @@
 controller:
   componentName: jenkins-controller
-  kind: Pod
+  serviceType: ClusterIP
   image: 'jenkins/jenkins'
-  ports: 
-    - containerPort: 8080
-    - hostPort: 8086
   imagePullPolicy: 'Always'
   adminSecret: true
   adminUser: admin
   adminPassword: 'formetoknowforyoutofindout'
+  namespaces:
+    - devops
+    - reverseproxy_default 
   resources:
     requests:
       cpu: '50m'
@@ -44,6 +44,12 @@ controller:
   env:
     - name: CASC_JENKINS_CONFIG
       value: "/var/jenkins_home/casc_configs/../data/jenkins.yaml"
+    - name: VIRTUAL_HOST
+      value: vaca.monellimankeimontenegro.eu
+    - name: LETSENCRYPT_HOST
+      value: vaca.monellimankeimontenegro.eu
+    - name: LETSENCRYPT_EMAIL
+      value: pablo@monellimankeimontenegro.eu
   installPlugins:
     - kubernetes:latest
     - kubernetes-credentials:latest
