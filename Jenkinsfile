@@ -1,4 +1,6 @@
-podTemplate(label: 'esjenkinspod',
+podTemplate(
+  label: 'esjenkinspod',
+  namespace: 'devops',
   containers: [ 
     containerTemplate(
       name: 'docker', 
@@ -31,15 +33,15 @@ podTemplate(label: 'esjenkinspod',
       command: 'cat'
     )
   ],
-
   volumes: [
     hostPathVolume(mountPath: '/var/run/docker.sock', hostPath: '/var/run/docker.sock'),
     hostPathVolume(mountPath: '/usr/local/bin/helm', hostPath: '/usr/local/bin/helm')
-  ]
-  ) {
+  ])
+  {
     node('esjenkinspod') {
       stage('Checkout') {
         echo 'Checkout repository from GitHub'
+        scm.extensions << [$class: 'CloneOption', shallow: true]
         checkout scm
       }
       stage('Build') {
@@ -64,31 +66,49 @@ podTemplate(label: 'esjenkinspod',
           container('helm') { 
             sh 'helm repo update'
 
-            // sh 'helm upgrade --install elasticsearch elastic/elasticsearch -f elasticsearch/values.yaml'
-            sh 'helm upgrade --install logstash elastic/logstash -f logstash/values.yaml'
-            sh 'helm upgrade --install kibana elastic/kibana -f kibana/values.yaml'
-            sh 'helm upgrade --install metricbeat elastic/metricbeat -f metricbeat/values.yaml'
+            // Deploy to namespace according to branch
+            if (env.BRANCH_NAME.equals("dev")) {
+                env.NAMESPACE="dev-test"
+                
+            } else {
+                env.NAMESPACE="prod-test"
+            }
+            echo "Testing in namespace: ${env.NAMESPACE}"
+
+            sh "helm upgrade --install elasticsearch elastic/elasticsearch -f elasticsearch/values.yaml -n $env.NAMESPACE --create-namespace"
+            sh "helm upgrade --install logstash elastic/logstash -f logstash/values.yaml -n $env.NAMESPACE --create-namespace"
+            sh "helm upgrade --install kibana elastic/kibana -f kibana/values.yaml -n $env.NAMESPACE --create-namespace"
+            sh "helm upgrade --install metricbeat elastic/metricbeat -f metricbeat/values.yaml -n $env.NAMESPACE --create-namespace"
 
             // Test deployed pods
-            // sh 'helm test elasticsearch'
-            sh 'helm test logstash'
-            sh 'helm test kibana'
-            sh 'helm test metricbeat'
+            // sh "helm test elasticsearch -n $env.NAMESPACE"
+            sh "helm test logstash -n $env.NAMESPACE"
+            sh "helm test kibana -n $env.NAMESPACE"
+            sh "helm test metricbeat -n $env.NAMESPACE"
 
-            // sh 'helm uninstall elasticsearch -n default'
-            sh 'helm uninstall logstash -n default'
-            sh 'helm uninstall kibana -n default'
-            sh 'helm uninstall metricbeat -n default'
+            sh "helm uninstall elasticsearch -n $env.NAMESPACE"
+            sh "helm uninstall logstash -n $env.NAMESPACE"
+            sh "helm uninstall kibana -n $env.NAMESPACE"
+            sh "helm uninstall metricbeat -n $env.NAMESPACE"
           }
       }
       stage('Deploy') {
         echo 'Deploy elasticsearch application'
         container('helm') { 
             sh 'ls'
-            // sh 'helm upgrade --install elasticsearch elastic/elasticsearch -f elasticsearch/values.yaml -n prod --create-namespace'
-            sh 'helm upgrade --install logstash elastic/logstash -f logstash/values.yaml -n prod --create-namespace'
-            sh 'helm upgrade --install kibana elastic/kibana -f kibana/values.yaml -n prod --create-namespace'
-            sh 'helm upgrade --install metricbeat elastic/metricbeat -f metricbeat/values.yaml -n prod --create-namespace'
+
+            if (env.BRANCH_NAME.equals("dev")) {
+                env.NAMESPACE="dev"
+                
+            } else {
+                env.NAMESPACE="prod"
+            }
+            echo "${env.NAMESPACE}"
+
+            // sh 'helm upgrade --install elasticsearch elastic/elasticsearch -f elasticsearch/values.yaml -n $env.NAMESPACE --create-namespace'
+            sh "helm upgrade --install logstash elastic/logstash -f logstash/values.yaml -n $env.NAMESPACE --create-namespace"
+            // sh "helm upgrade --install kibana elastic/kibana -f kibana/values.yaml -n $env.NAMESPACE --create-namespace"
+            // sh "helm upgrade --install metricbeat elastic/metricbeat -f metricbeat/values.yaml -n $env.NAMESPACE --create-namespace"
         }
       }      
     }
