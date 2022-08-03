@@ -29,7 +29,7 @@ controller:
                   git {
                     id('1')
                     remote('https://github.com/PaulOberm/little-elk.git')
-                    includes('*maino')
+                    includes('*main')
                   }
                   git {
                     id('2')

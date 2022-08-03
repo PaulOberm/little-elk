@@ -81,7 +81,7 @@ podTemplate(
             sh "helm upgrade --install metricbeat elastic/metricbeat -f metricbeat/values.yaml -n $env.NAMESPACE --create-namespace"
 
             // Test deployed pods
-            sh "helm test elasticsearch -n $env.NAMESPACE"
+            // sh "helm test elasticsearch -n $env.NAMESPACE"
             sh "helm test logstash -n $env.NAMESPACE"
             sh "helm test kibana -n $env.NAMESPACE"
             sh "helm test metricbeat -n $env.NAMESPACE"
@@ -107,8 +107,8 @@ podTemplate(
 
             // sh 'helm upgrade --install elasticsearch elastic/elasticsearch -f elasticsearch/values.yaml -n $env.NAMESPACE --create-namespace'
             sh "helm upgrade --install logstash elastic/logstash -f logstash/values.yaml -n $env.NAMESPACE --create-namespace"
-            sh "helm upgrade --install kibana elastic/kibana -f kibana/values.yaml -n $env.NAMESPACE --create-namespace"
-            sh "helm upgrade --install metricbeat elastic/metricbeat -f metricbeat/values.yaml -n $env.NAMESPACE --create-namespace"
+            // sh "helm upgrade --install kibana elastic/kibana -f kibana/values.yaml -n $env.NAMESPACE --create-namespace"
+            // sh "helm upgrade --install metricbeat elastic/metricbeat -f metricbeat/values.yaml -n $env.NAMESPACE --create-namespace"
         }
       }      
     }
