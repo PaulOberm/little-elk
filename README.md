@@ -23,6 +23,8 @@ Checkout this repository on that local machine.
 - `git clone https://github.com/PaulOberm/little-elk.git`
 - `cd little-elk`
 
+Set up GitHub Webhook.
+
 ## Usage ##
 Sets up a Jenkins pod. In the **values.yaml** file, the pipeline is seeded to
 the corresponding GitHub [repo](https://github.com/PaulOberm/little-elk) to **main**
