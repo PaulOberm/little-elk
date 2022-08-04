@@ -43,7 +43,10 @@ controller:
                   }
                 }
                 triggers {
-                  cron(10 2 * * *)
+                  GithubWebhookMultibranchTrigger {
+                    refTrigger(true)
+                    pullRequestTrigger(false)
+                  }
                 }
               }
       welcome-message: |
