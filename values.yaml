@@ -43,10 +43,7 @@ controller:
                   }
                 }
                 triggers {
-                  GithubWebhookMultibranchTrigger {
-                    refTrigger(true)
-                    pullRequestTrigger(false)
-                  }
+                  githubPush()
                 }
               }
       welcome-message: |
