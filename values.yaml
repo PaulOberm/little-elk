@@ -10,7 +10,7 @@ controller:
     passwordKey: jenkins-admin-password
   # adminUser: admin
   # adminPassword: 'formetoknowforyoutofindout'
-  NodePort: 30398
+  nodePort: 30398
   servicePort: 8080
   targetPort: 8080
   jenkinsUriPrefix: "/jenkins"
