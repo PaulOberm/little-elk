@@ -25,6 +25,9 @@ Checkout this repository on that local machine.
 
 Set up GitHub Webhook.
 - Add/Change repository webhook for Jenkins server IP address and port
+- Port is fixed as nodePort in values.yaml
+- In GitHub: Select repository, go to Settings, go to Webhooks
+- Set in Jenkins: Project, Settings, Scan Multibranch Pipeline Trigger, Select Scan by webhook, add token: estoken
 
 ## Usage ##
 Sets up a Jenkins pod. In the **values.yaml** file, the pipeline is seeded to
