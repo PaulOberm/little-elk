@@ -73,5 +73,6 @@ controller:
     - workflow-job:latest
     - credentials-binding:latest
     - git:latest
+    - github:latest
     - configuration-as-code:latest
     - job-dsl:latest
