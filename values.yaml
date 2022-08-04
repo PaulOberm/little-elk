@@ -76,4 +76,4 @@ controller:
     - github:latest
     - configuration-as-code:latest
     - job-dsl:latest
-    - multibranch-webhook-trigger:latest
+    - multibranch-scan-webhook-trigger:latest
