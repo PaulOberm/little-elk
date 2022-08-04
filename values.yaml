@@ -10,7 +10,13 @@ controller:
     passwordKey: jenkins-admin-password
   # adminUser: admin
   # adminPassword: 'formetoknowforyoutofindout'
-  nodePort: 30398
+  # nodePort: 30398
+  ports:  
+    - name: https
+      port: 443
+      targetPort: 443
+      nodePort: 30398
+      protocol: TCP
   servicePort: 8080
   targetPort: 8080
   jenkinsUriPrefix: "/jenkins"
@@ -41,9 +47,6 @@ controller:
                     remote('https://github.com/PaulOberm/little-elk.git')
                     includes('*dev')
                   }
-                }
-                triggers {
-                  githubPush()
                 }
               }
       welcome-message: |
