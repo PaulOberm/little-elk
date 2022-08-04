@@ -1,6 +1,7 @@
 controller:
   componentName: jenkins-controller
   serviceType: NodePort
+  nodePort: 30398
   image: 'jenkins/jenkins'
   imagePullPolicy: 'Always'
   adminSecret: true
@@ -40,6 +41,9 @@ controller:
                     remote('https://github.com/PaulOberm/little-elk.git')
                     includes('*dev')
                   }
+                }
+                triggers {
+
                 }
               }
       welcome-message: |

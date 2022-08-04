@@ -24,6 +24,7 @@ Checkout this repository on that local machine.
 - `cd little-elk`
 
 Set up GitHub Webhook.
+- Add/Change repository webhook for Jenkins server IP address and port
 
 ## Usage ##
 Sets up a Jenkins pod. In the **values.yaml** file, the pipeline is seeded to
