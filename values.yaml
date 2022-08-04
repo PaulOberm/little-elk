@@ -42,6 +42,9 @@ controller:
                     includes('*dev')
                   }
                 }
+                triggers {
+                  cron(10 2 * * *)
+                }
               }
       welcome-message: |
         jenkins:
