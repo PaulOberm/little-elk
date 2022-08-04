@@ -1,7 +1,6 @@
 controller:
   componentName: jenkins-controller
   serviceType: NodePort
-  nodePort: 30398
   image: 'jenkins/jenkins'
   imagePullPolicy: 'Always'
   adminSecret: true
@@ -11,7 +10,7 @@ controller:
     passwordKey: jenkins-admin-password
   # adminUser: admin
   # adminPassword: 'formetoknowforyoutofindout'
-  servicePort: 8080
+  servicePort: 30398
   targetPort: 8080
   jenkinsUriPrefix: "/jenkins"
   resources:
