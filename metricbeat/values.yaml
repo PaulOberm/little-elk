@@ -226,19 +226,20 @@ metadata:
 subjects:
 - kind: ServiceAccount
   name: metricbeat
+  namespace: {{ .Release.Namespace }}
+roleRef:
+  kind: ClusterRole
+  name: metricbeat-kube-state-metrics
+  apiGroup: rbac.authorization.k8s.io
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: metricbeat
+subjects:
+- kind: ServiceAccount
+  name: metricbeat
   namespace: kube-system
-- kind: ServiceAccount
-  name: metricbeat
-  namespace: prod-test
-- kind: ServiceAccount
-  name: metricbeat
-  namespace: dev-test
-- kind: ServiceAccount
-  name: metricbeat
-  namespace: prod
-- kind: ServiceAccount
-  name: metricbeat
-  namespace: dev
 roleRef:
   kind: ClusterRole
   name: metricbeat
